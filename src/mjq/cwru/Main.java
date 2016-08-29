@@ -1,6 +1,5 @@
 package mjq.cwru;
 
-import javax.swing.table.TableRowSorter;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -119,6 +118,33 @@ public class Main {
                             marked[w] = true;
                             edgeTo[w] = v;
                         }
+                    }
+                }
+            }
+        }
+
+        public class ConnectedComponent {
+            private boolean[] marked;
+            private int[] id;
+            private int count;
+
+            public ConnectedComponent(Graph G) {
+                marked = new boolean[G.V];
+                id = new int[G.V];
+                for (int v = 0; v < G.V; v++) {
+                    if (!marked[v]) {
+                        dfs(G, v);
+                        count++;
+                    }
+                }
+            }
+
+            private void dfs(Graph G, int v) {
+                marked[v] = true;
+                id[v] = count;
+                for (int w : G.adj(v)) {
+                    if (!marked[w]) {
+                        dfs(G, w);
                     }
                 }
             }
