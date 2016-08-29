@@ -2,6 +2,8 @@ package mjq.cwru;
 
 import javax.swing.table.TableRowSorter;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class Main {
@@ -94,5 +96,32 @@ public class Main {
             return path;
         }
 
+        public class BreadthFirstPaths {
+            private boolean[] marked;
+            private int[] edgeTo;
+
+            public BreadthFirstPaths(Graph G, int s) {
+                marked = new boolean[G.V];
+                edgeTo = new int[G.V];
+
+                bfs(G, s);
+            }
+
+            private void bfs(Graph G, int s) {
+                Queue<Integer> q = new LinkedList<Integer>();
+                q.offer(s);
+                marked[s] = true;
+                while (!q.isEmpty()) {
+                    int v = q.poll();
+                    for (int w : G.adj(v)) {
+                        if (!marked[w]) {
+                            q.offer(w);
+                            marked[w] = true;
+                            edgeTo[w] = v;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
